@@ -1,2 +1,3 @@
 # BaselineGuard
-A configuration remediation tool that uses InSpec to scan your local computer and compares its configurations to the recommended security baselines and helps remediate them.
+A security baseline scanner and remediation tool that integrates with InSpec to detect configuration drift and apply secure configuration fixes.
+
