@@ -91,7 +91,16 @@ def run_scan():
                 'severity': severity_order
             }
 
-            print(sorted_results['standard'])
+
+            standard_order_results = sorted_results['standard']
+
+            for result in standard_order_results:
+                print(result['status'] + ": " + result['title'])
+                print("   ", result['impact'])
+                print("   ", result['code_desc'])
+                print("   ", result['message'])
+                print("   ", result['run_time'])
+
 
 
 
