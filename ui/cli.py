@@ -101,6 +101,15 @@ def exit_from_prompt():
 
 def print_scan_results(controls_data):
     init()  # initialize colorama
+
+    num_passed_controls = 0
+    num_failed_controls = 0
+    num_skipped_controls = 0
+
+    num_passed_tests = 0
+    num_failed_tests = 0
+    num_skipped_tests = 0
+
     for control in controls_data:
 
         status = control['overall_status']
@@ -111,12 +120,15 @@ def print_scan_results(controls_data):
         if status == "passed":
             color = Fore.LIGHTGREEN_EX
             symbol = "✔"
+            num_passed_controls += 1
         elif status == "failed":
             color = Fore.LIGHTRED_EX
             symbol = "×"
+            num_failed_controls += 1
         elif status == "skipped":
             color = Fore.YELLOW
             symbol = "-"
+            num_skipped_controls += 1
         else:
             color = Fore.MAGENTA
             symbol = "?"
@@ -130,16 +142,30 @@ def print_scan_results(controls_data):
             if result_status == "passed":
                 color = Fore.LIGHTGREEN_EX
                 symbol = "✔"
+                num_passed_tests += 1
             elif result_status == "failed":
                 color = Fore.LIGHTRED_EX
                 symbol = "×"
+                num_failed_tests += 1
             elif result_status == "skipped":
                 color = Fore.YELLOW
                 symbol = "-"
+                num_skipped_tests += 1
             else:
                 color = Fore.MAGENTA
                 symbol = "?"
 
             print(color + "        " + symbol + " " + result_status + ": " + description)
         print("\n")
+
+    print("Controls: ", end="")
+    print(Fore.LIGHTGREEN_EX, str(num_passed_controls) + " passed, ", end='')
+    print(Fore.LIGHTRED_EX, str(num_failed_controls) + " failed, ", end='')
+    print(str(num_skipped_controls) + " skipped, ")
+
+    print("Tests: ", end="")
+    print(Fore.LIGHTGREEN_EX, str(num_passed_tests) + " passed, ", end='')
+    print(Fore.LIGHTRED_EX, str(num_failed_tests) + " failed, ", end='')
+    print(str(num_skipped_tests) + " skipped, ")
+
 
