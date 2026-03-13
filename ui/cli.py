@@ -95,61 +95,55 @@ def run_scan():
             }
             controls_data.append(control_entry)
 
-
-
-
-
-        init() # initialize colorama
-        for control in controls_data:
-
-            status = control['overall_status']
-            control_id = control['id']
-            title = control['title']
-            results = control['results']
-
-
-            if status == "passed":
-                color = Fore.LIGHTGREEN_EX
-                symbol = "✔"
-            elif status == "failed":
-                color = Fore.LIGHTRED_EX
-                symbol = "×"
-            elif status == "skipped":
-                color = Fore.YELLOW
-                symbol = "-"
-            else:
-                color = Fore.MAGENTA
-                symbol = "?"
-
-            print(color + symbol + " " + status.upper(), control_id, title)
-
-            for result in results:
-                result_status = result['status']
-                description = result['code_desc']
-
-                if result_status == "passed":
-                    color = Fore.LIGHTGREEN_EX
-                    symbol = "✔"
-                elif result_status == "failed":
-                    color = Fore.LIGHTRED_EX
-                    symbol = "×"
-                elif result_status == "skipped":
-                    color = Fore.YELLOW
-                    symbol = "-"
-                else:
-                    color = Fore.MAGENTA
-                    symbol = "?"
-
-                print(color + "        " + symbol + " " + result_status + ": " + description)
-            print("\n")
-
-
-
-
+            print_scan_results(controls_data)
 
 
 
 def exit_from_prompt():
     print("Exiting...")
     sys.exit(1)
+
+def print_scan_results(controls_data):
+    init()  # initialize colorama
+    for control in controls_data:
+
+        status = control['overall_status']
+        control_id = control['id']
+        title = control['title']
+        results = control['results']
+
+        if status == "passed":
+            color = Fore.LIGHTGREEN_EX
+            symbol = "✔"
+        elif status == "failed":
+            color = Fore.LIGHTRED_EX
+            symbol = "×"
+        elif status == "skipped":
+            color = Fore.YELLOW
+            symbol = "-"
+        else:
+            color = Fore.MAGENTA
+            symbol = "?"
+
+        print(color + symbol + " " + status.upper(), control_id, title)
+
+        for result in results:
+            result_status = result['status']
+            description = result['code_desc']
+
+            if result_status == "passed":
+                color = Fore.LIGHTGREEN_EX
+                symbol = "✔"
+            elif result_status == "failed":
+                color = Fore.LIGHTRED_EX
+                symbol = "×"
+            elif result_status == "skipped":
+                color = Fore.YELLOW
+                symbol = "-"
+            else:
+                color = Fore.MAGENTA
+                symbol = "?"
+
+            print(color + "        " + symbol + " " + result_status + ": " + description)
+        print("\n")
 
