@@ -7,6 +7,7 @@ from unittest import result
 from colorama import Fore, Style, init
 
 from utils import *
+import re
 
 def run():
 
@@ -159,9 +160,9 @@ def print_scan_results(controls_data):
                 symbol = "?"
 
             print(color + "     " + symbol + " " + description)
-
-            if message:
-                print("     " + message)
+            expected, got = parse_expected_got(message)
+            print("expected: ", expected)
+            print("got: ", got)
 
         print("\n")
 
@@ -176,3 +177,14 @@ def print_scan_results(controls_data):
     print(Fore.WHITE, str(num_skipped_tests) + " skipped")
 
 
+def parse_expected_got(message: str):
+    if not message:
+        return None, None
+
+    expected_match = re.search(r'expected:\s*"?([^"\n]+)"?', message)
+    got_match = re.search(r'got:\s*"?([^"\n]+)"?', message)
+
+    expected = expected_match.group(1) if expected_match else None
+    got = got_match.group(1) if got_match else None
+
+    return expected, got
