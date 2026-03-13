@@ -3,8 +3,6 @@ import sys
 import shutil, subprocess
 import json
 
-from Tools.scripts.verify_ensurepip_wheels import print_error
-
 from utils import *
 
 def run():
