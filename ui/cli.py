@@ -51,29 +51,49 @@ def run_scan():
         profile = json_scan_data['profiles'][0]
         controls = profile['controls']
 
-        passed_tests = []
-        failed_tests = []
-        skipped_tests = []
-
+        all_results = []
         for control in controls:
-            control_id = control.get("id")
-            control_title = control.get("title")
-            status = control.get('results')[0]['status']
+            control_id = control.get('id')
+            title = control.get('title')
+            impact = control.get('impact', 0)
+            tags = control.get('tags', [])
 
-            if status == "passed":
-                passed_tests.append(control_title)
-            elif status == "failed":
-                failed_tests.append(control_title)
-            elif status == "skipped":
-                skipped_tests.append(control_title)
-            else:
-                print("Unknown status = ", status, file=sys.stderr)
+            for result in control.get('results', []):
+                entry = {
+                    'id': control_id,
+                    'title': title,
+                    'impact': impact,
+                    'tags': tags,
+                    'status': result.get('status'),
+                    'code_desc': result.get('code_desc'),
+                    'message': result.get('message'),
+                    'run_time': result.get('run_time')
+                }
+                all_results.append(entry)
 
-        print("Passed tests: ", passed_tests, file=sys.stderr)
-        for test in passed_tests:
-            print(test)
-        #print("Passed tests: ", passed_tests)
-        #print("Failed tests: ", failed_tests)
+            standard_order = all_results.copy()
+
+            status_order = ['failed', 'passed', 'skipped']
+            grouped_order = []
+            for status in status_order:
+                for result in all_results:
+                    if result['status'] == status:
+                        grouped_order.append(result)
+
+            severity_order = sorted(
+                all_results,
+                key=lambda x: (-x['impact'], x['status'] != 'skipped') # puts skipped results last
+            )
+
+            sorted_results = {
+                'standard': standard_order,
+                'grouped': grouped_order,
+                'severity': severity_order
+            }
+
+            print(sorted_results['standard'])
+
+
 
 
 
