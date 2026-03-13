@@ -140,7 +140,7 @@ def run_scan():
                     color = Fore.MAGENTA
                     symbol = "?"
 
-                print(symbol + color + "        " + result_status + ": " + description)
+                print(color + "        " + symbol + result_status + ": " + description)
             print("\n")
 
 
