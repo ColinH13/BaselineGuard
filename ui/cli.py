@@ -137,6 +137,7 @@ def print_scan_results(controls_data):
         for result in results:
             result_status = result['status']
             description = result['code_desc']
+            message = result['message']
 
             if result_status == "passed":
                 color = Fore.LIGHTGREEN_EX
@@ -155,6 +156,7 @@ def print_scan_results(controls_data):
                 symbol = "?"
 
             print(color + "     " + symbol + " " + description)
+            print(message)
         print("\n")
 
     print(Fore.WHITE, "Controls: ", end="")
