@@ -161,8 +161,10 @@ def print_scan_results(controls_data):
 
             print(color + "     " + symbol + " " + description)
             expected, got = parse_expected_got(message)
-            print("     expected: ", expected)
-            print("     got: ", got)
+
+            if expected and got:
+                print("     expected: ", expected)
+                print("     got: ", got)
 
         print("\n")
 
