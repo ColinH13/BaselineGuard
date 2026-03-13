@@ -40,7 +40,6 @@ def print_prompt():
 def run_scan():
     print("Starting scan...")
     with open("config/config.json") as config_file:
-        print("check 1")
         config = json.load(config_file)
         profile = config["inspec_profile_linux"]
         scan_cmd = ["inspec", "exec", "https://github.com/dev-sec/linux-baseline", "--reporter", "json", "--chef-license", "accept"]
@@ -55,7 +54,7 @@ def run_scan():
 
         i = 0
         for control in controls:
-            print("check", i)
+
             i = i+1
             control_id = control.get('id')
             title = control.get('title')
@@ -158,14 +157,14 @@ def print_scan_results(controls_data):
             print(color + "        " + symbol + " " + result_status + ": " + description)
         print("\n")
 
-    print("Controls: ", end="")
+    print(Fore.WHITE, "Controls: ", end="")
     print(Fore.LIGHTGREEN_EX, str(num_passed_controls) + " passed, ", end='')
     print(Fore.LIGHTRED_EX, str(num_failed_controls) + " failed, ", end='')
-    print(str(num_skipped_controls) + " skipped, ")
+    print(Fore.WHITE, str(num_skipped_controls) + " skipped, ")
 
-    print("Tests: ", end="")
+    print(Fore.WHITE, "Tests: ", end="")
     print(Fore.LIGHTGREEN_EX, str(num_passed_tests) + " passed, ", end='')
     print(Fore.LIGHTRED_EX, str(num_failed_tests) + " failed, ", end='')
-    print(str(num_skipped_tests) + " skipped, ")
+    print(Fore.WHITE, str(num_skipped_tests) + " skipped, ")
 
 
