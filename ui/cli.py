@@ -41,6 +41,7 @@ def print_prompt():
 def run_scan():
     print("Starting scan...")
     with open("config/config.json") as config_file:
+        print("check 1")
         config = json.load(config_file)
         profile = config["inspec_profile_linux"]
         scan_cmd = ["inspec", "exec", "https://github.com/dev-sec/linux-baseline", "--reporter", "json", "--chef-license", "accept"]
@@ -78,7 +79,7 @@ def run_scan():
             else:
                 overall_status = "skipped"
 
-
+            print("check 2")
             control_entry = {
                 'id': control_id,
                 'title': title,
@@ -101,6 +102,7 @@ def run_scan():
                 result_status = result['status']
                 description = result['code_desc']
                 print("   " + result_status + ": " + description)
+        print("check 3")
 
 
 
