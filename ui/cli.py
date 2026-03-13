@@ -63,7 +63,6 @@ def run_scan():
             impact = control.get('impact', 0)
             tags = control.get('tags', [])
 
-            results_list = []
 
             for result in control.get('results', []):
                 entry = {
@@ -72,7 +71,7 @@ def run_scan():
                     'message': result.get('message'),
                     'run_time': result.get('run_time')
                 }
-                results_list.append(entry)
+                controls_data.append(entry)
 
             if any(r['status'] == 'failed' for r in results_list):
                 overall_status = "failed"
@@ -104,8 +103,7 @@ def run_scan():
                 result_status = result['status']
                 description = result['code_desc']
                 print("   " + result_status + ": " + description)
-        print("check 3")
-        print(controls_data)
+
 
 
 
