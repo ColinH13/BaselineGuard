@@ -107,9 +107,9 @@ def run_scan():
             results = control['results']
 
             if status == "passed":
-                color = Fore.GREEN
+                color = Fore.LIGHTGREEN_EX
             elif status == "failed":
-                color = Fore.RED
+                color = Fore.LIGHTRED_EX
             elif status == "skipped":
                 color = Fore.YELLOW
             else:
