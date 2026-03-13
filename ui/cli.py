@@ -121,8 +121,8 @@ def run_scan():
                 result_status = result['status']
                 description = result['code_desc']
 
-                color = Fore.GREEN if result_status == "passed" else Fore.RED
-                print(color + "   " + result_status + ": " + description)
+                color = Fore.LIGHTGREEN_EX if result_status == "passed" else Fore.LIGHTRED_EX
+                print(color + "        " + result_status + ": " + description)
 
 
 
