@@ -105,6 +105,7 @@ def run_scan():
                 description = result['code_desc']
                 print("   " + result_status + ": " + description)
         print("check 3")
+        print(controls_data)
 
 
 
