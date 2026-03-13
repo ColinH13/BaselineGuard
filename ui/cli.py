@@ -96,10 +96,10 @@ def run_scan():
 
             for result in standard_order_results:
                 print(result['status'] + ": " + result['title'])
-                print("   ", result['impact'])
+                '''print("   ", result['impact'])
                 print("   ", result['code_desc'])
                 print("   ", result['message'])
-                print("   ", result['run_time'])
+                print("   ", result['run_time'])'''
 
 
 
