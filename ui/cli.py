@@ -137,7 +137,7 @@ def print_scan_results(controls_data):
         for result in results:
             result_status = result['status']
             description = result['code_desc']
-            message = result['message']
+            message = result['message'] if result['message'] is None else message = ""
 
             if result_status == "passed":
                 color = Fore.LIGHTGREEN_EX
