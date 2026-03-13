@@ -70,8 +70,10 @@ def run_scan():
                 print("Unknown status = ", status, file=sys.stderr)
 
 
-        print("Passed tests: ", passed_tests)
-        print("Failed tests: ", failed_tests)
+        for test in passed_tests:
+            print("\nPASSED: ", test)
+        #print("Passed tests: ", passed_tests)
+        #print("Failed tests: ", failed_tests)
 
 
 
