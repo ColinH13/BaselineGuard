@@ -91,7 +91,7 @@ def run_scan():
             }
             controls_data.append(control_entry)
 
-            print_scan_results(controls_data)
+        print_scan_results(controls_data)
 
 
 
