@@ -22,9 +22,6 @@ def run():
         if choice == "1" or choice == "scan":
             run_scan()
 
-        if choice == "2" or choice == "remediate":
-            print("Starting remediation...")
-
         if choice == "3" or choice == "exit":
             exit_from_prompt()
 
@@ -38,7 +35,6 @@ def print_not_installed_message():
 def print_prompt():
     print(" What would you like to do?")
     print("     1. Scan your system")
-    print("     2. Remediate a misconfiguration")
     print("     3. Exit")
 
 def run_scan():
