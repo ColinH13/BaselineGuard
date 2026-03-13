@@ -56,7 +56,7 @@ def run_scan():
 
         i = 0
         for control in controls:
-            print("check, i")
+            print("check", i)
             control_id = control.get('id')
             title = control.get('title')
             impact = control.get('impact', 0)
