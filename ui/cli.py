@@ -127,10 +127,19 @@ def run_scan():
                 result_status = result['status']
                 description = result['code_desc']
 
-                symbol = "✔" if result_status == "passed" else symbol = "×"
-                if result_status == "skipped": symbol = "-"
+                if result_status == "passed":
+                    color = Fore.LIGHTGREEN_EX
+                    symbol = "✔"
+                elif result_status == "failed":
+                    color = Fore.LIGHTRED_EX
+                    symbol = "×"
+                elif result_status == "skipped":
+                    color = Fore.YELLOW
+                    symbol = "-"
+                else:
+                    color = Fore.MAGENTA
+                    symbol = "?"
 
-                color = Fore.LIGHTGREEN_EX if result_status == "passed" else Fore.LIGHTRED_EX
                 print(color + "        " + result_status + ": " + description)
         print("\n\n\n")
 
