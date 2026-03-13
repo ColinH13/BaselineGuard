@@ -64,6 +64,7 @@ def run_scan():
             tags = control.get('tags', [])
 
 
+            results_list = []
             for result in control.get('results', []):
                 entry = {
                     'status': result.get('status'),
@@ -71,7 +72,7 @@ def run_scan():
                     'message': result.get('message'),
                     'run_time': result.get('run_time')
                 }
-                controls_data.append(entry)
+                results_list.append(entry)
 
             if any(r['status'] == 'failed' for r in results_list):
                 overall_status = "failed"
@@ -89,6 +90,7 @@ def run_scan():
                 'overall_status': overall_status,
                 'results': results_list
             }
+            controls_data.append(control_entry)
 
         for control in controls_data:
 
