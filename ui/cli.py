@@ -166,7 +166,7 @@ def print_scan_results(controls_data):
                 print("        expected: ", expected)
                 print("        got: ", got)
 
-        print("\n")
+        #print("\n")
 
     print(Fore.WHITE, "Controls: ", end="")
     print(Fore.LIGHTGREEN_EX, str(num_passed_controls) + " passed, ", end='')
