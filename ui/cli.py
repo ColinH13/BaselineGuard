@@ -54,8 +54,9 @@ def run_scan():
 
         controls_data = []
 
+        i = 0
         for control in controls:
-
+            print("check, i")
             control_id = control.get('id')
             title = control.get('title')
             impact = control.get('impact', 0)
@@ -79,7 +80,7 @@ def run_scan():
             else:
                 overall_status = "skipped"
 
-            print("check 2")
+
             control_entry = {
                 'id': control_id,
                 'title': title,
