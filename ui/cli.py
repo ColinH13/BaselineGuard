@@ -154,17 +154,17 @@ def print_scan_results(controls_data):
                 color = Fore.MAGENTA
                 symbol = "?"
 
-            print(color + "        " + symbol + " " + result_status + ": " + description)
+            print(color + "     " + symbol + " " + description)
         print("\n")
 
     print(Fore.WHITE, "Controls: ", end="")
     print(Fore.LIGHTGREEN_EX, str(num_passed_controls) + " passed, ", end='')
     print(Fore.LIGHTRED_EX, str(num_failed_controls) + " failed, ", end='')
-    print(Fore.WHITE, str(num_skipped_controls) + " skipped, ")
+    print(Fore.WHITE, str(num_skipped_controls) + " skipped")
 
     print(Fore.WHITE, "Tests: ", end="")
     print(Fore.LIGHTGREEN_EX, str(num_passed_tests) + " passed, ", end='')
     print(Fore.LIGHTRED_EX, str(num_failed_tests) + " failed, ", end='')
-    print(Fore.WHITE, str(num_skipped_tests) + " skipped, ")
+    print(Fore.WHITE, str(num_skipped_tests) + " skipped")
 
 
