@@ -106,14 +106,19 @@ def run_scan():
             title = control['title']
             results = control['results']
 
+
             if status == "passed":
                 color = Fore.LIGHTGREEN_EX
+                symbol = "✔"
             elif status == "failed":
                 color = Fore.LIGHTRED_EX
+                symbol = "×"
             elif status == "skipped":
                 color = Fore.YELLOW
+                symbol = "-"
             else:
                 color = Fore.MAGENTA
+                symbol = "?"
 
             print(color + status.upper(), control_id, title)
 
@@ -123,6 +128,7 @@ def run_scan():
 
                 color = Fore.LIGHTGREEN_EX if result_status == "passed" else Fore.LIGHTRED_EX
                 print(color + "        " + result_status + ": " + description)
+        print("\n\n")
 
 
 
