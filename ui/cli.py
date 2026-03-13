@@ -26,7 +26,8 @@ def run():
             with open("config/config.json") as config_file:
                 config = json.load(config_file)
                 profile = config["inspec_profile_linux"]
-                subprocess.run(["inspec", "exec", profile, profile, f"--chef-license", "accept"], check=True)
+                #subprocess.run(["inspec", "exec", profile, f"--chef-license", "accept"], check=True)
+                subprocess.run(["inspec",  "exec",  "https://github.com/dev-sec/linux-baseline", "--chef-license", "accept"])
 
         if choice == "2" or choice == "remediate":
             print("Starting remediation...")
