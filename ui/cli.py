@@ -51,56 +51,56 @@ def run_scan():
         profile = json_scan_data['profiles'][0]
         controls = profile['controls']
 
-        all_results = []
+        controls_data = []
+
         for control in controls:
+
             control_id = control.get('id')
             title = control.get('title')
             impact = control.get('impact', 0)
             tags = control.get('tags', [])
 
+            results_list = []
+
             for result in control.get('results', []):
                 entry = {
-                    'id': control_id,
-                    'title': title,
-                    'impact': impact,
-                    'tags': tags,
                     'status': result.get('status'),
                     'code_desc': result.get('code_desc'),
                     'message': result.get('message'),
                     'run_time': result.get('run_time')
                 }
-                all_results.append(entry)
+                results_list.append(entry)
 
-            standard_order = all_results.copy()
+            if any(r['status'] == 'failed' for r in results_list):
+                overall_status = "failed"
+            elif all(r['status'] == 'passed' for r in results_list):
+                overall_status = "passed"
+            else:
+                overall_status = "skipped"
 
-            status_order = ['failed', 'passed', 'skipped']
-            grouped_order = []
-            for status in status_order:
-                for result in all_results:
-                    if result['status'] == status:
-                        grouped_order.append(result)
 
-            severity_order = sorted(
-                all_results,
-                key=lambda x: (-x['impact'], x['status'] != 'skipped') # puts skipped results last
-            )
-
-            sorted_results = {
-                'standard': standard_order,
-                'grouped': grouped_order,
-                'severity': severity_order
+            control_entry = {
+                'id': control_id,
+                'title': title,
+                'impact': impact,
+                'tags': tags,
+                'overall_status': overall_status,
+                'results': results_list
             }
 
+        for control in controls_data:
 
-            standard_order_results = sorted_results['standard']
+            status = control['overall_status']
+            control_id = control['id']
+            title = control['title']
+            results = control['results']
 
-            for result in standard_order_results:
-                print(result['status'] + ": " + result['title'])
-                '''print("   ", result['impact'])
-                print("   ", result['code_desc'])
-                print("   ", result['message'])
-                print("   ", result['run_time'])'''
+            print(status.upper(), control_id, title)
 
+            for result in results:
+                result_status = result['status']
+                description = result['code_desc']
+                print("   " + result_status + ": " + description)
 
 
 
