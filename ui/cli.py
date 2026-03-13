@@ -3,6 +3,8 @@ import sys
 import shutil, subprocess
 import json
 
+from colorama import Fore, Style, init
+
 from utils import *
 
 def run():
@@ -92,6 +94,11 @@ def run_scan():
             }
             controls_data.append(control_entry)
 
+
+
+
+
+        init() # initialize colorama
         for control in controls_data:
 
             status = control['overall_status']
@@ -99,12 +106,23 @@ def run_scan():
             title = control['title']
             results = control['results']
 
-            print(status.upper(), control_id, title)
+            if status == "passed":
+                color = Fore.GREEN
+            elif status == "failed":
+                color = Fore.RED
+            elif status == "skipped":
+                color = Fore.YELLOW
+            else:
+                color = Fore.MAGENTA
+
+            print(color + status.upper(), control_id, title)
 
             for result in results:
                 result_status = result['status']
                 description = result['code_desc']
-                print("   " + result_status + ": " + description)
+
+                color = Fore.GREEN if result_status == "passed" else Fore.RED
+                print(color + "   " + result_status + ": " + description)
 
 
 
