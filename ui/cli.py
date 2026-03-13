@@ -2,6 +2,7 @@ import sys
 
 import shutil, subprocess
 import json
+from unittest import result
 
 from colorama import Fore, Style, init
 
@@ -126,9 +127,12 @@ def run_scan():
                 result_status = result['status']
                 description = result['code_desc']
 
+                symbol = "✔" if result_status == "passed" else symbol = "×"
+                if result_status == "skipped": symbol = "-"
+
                 color = Fore.LIGHTGREEN_EX if result_status == "passed" else Fore.LIGHTRED_EX
                 print(color + "        " + result_status + ": " + description)
-        print("\n\n")
+        print("\n\n\n")
 
 
 
