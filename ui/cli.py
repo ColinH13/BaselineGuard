@@ -2,6 +2,9 @@ import sys
 
 import shutil, subprocess
 import json
+from unittest import result
+
+from colorama import Fore, Style, init
 
 from utils import *
 
@@ -19,9 +22,6 @@ def run():
         if choice == "1" or choice == "scan":
             run_scan()
 
-        if choice == "2" or choice == "remediate":
-            print("Starting remediation...")
-
         if choice == "3" or choice == "exit":
             exit_from_prompt()
 
@@ -35,12 +35,12 @@ def print_not_installed_message():
 def print_prompt():
     print(" What would you like to do?")
     print("     1. Scan your system")
-    print("     2. Remediate a misconfiguration")
     print("     3. Exit")
 
 def run_scan():
     print("Starting scan...")
     with open("config/config.json") as config_file:
+        print("check 1")
         config = json.load(config_file)
         profile = config["inspec_profile_linux"]
         scan_cmd = ["inspec", "exec", "https://github.com/dev-sec/linux-baseline", "--reporter", "json", "--chef-license", "accept"]
@@ -51,34 +51,95 @@ def run_scan():
         profile = json_scan_data['profiles'][0]
         controls = profile['controls']
 
-        passed_tests = []
-        failed_tests = []
-        skipped_tests = []
+        controls_data = []
 
+        i = 0
         for control in controls:
-            control_id = control.get("id")
-            control_title = control.get("title")
-            status = control.get('results')[0]['status']
+            print("check", i)
+            i = i+1
+            control_id = control.get('id')
+            title = control.get('title')
+            impact = control.get('impact', 0)
+            tags = control.get('tags', [])
 
-            if status == "passed":
-                passed_tests.append(control_title)
-            elif status == "failed":
-                failed_tests.append(control_title)
-            elif status == "skipped":
-                skipped_tests.append(control_title)
+
+            results_list = []
+            for result in control.get('results', []):
+                entry = {
+                    'status': result.get('status'),
+                    'code_desc': result.get('code_desc'),
+                    'message': result.get('message'),
+                    'run_time': result.get('run_time')
+                }
+                results_list.append(entry)
+
+            if any(r['status'] == 'failed' for r in results_list):
+                overall_status = "failed"
+            elif all(r['status'] == 'passed' for r in results_list):
+                overall_status = "passed"
             else:
-                print("Unknown status = ", status, file=sys.stderr)
+                overall_status = "skipped"
 
-        print("Passed tests: ", passed_tests, file=sys.stderr)
-        for test in passed_tests:
-            print(test)
-        #print("Passed tests: ", passed_tests)
-        #print("Failed tests: ", failed_tests)
 
+            control_entry = {
+                'id': control_id,
+                'title': title,
+                'impact': impact,
+                'tags': tags,
+                'overall_status': overall_status,
+                'results': results_list
+            }
+            controls_data.append(control_entry)
+
+            print_scan_results(controls_data)
 
 
 
 def exit_from_prompt():
     print("Exiting...")
     sys.exit(1)
+
+def print_scan_results(controls_data):
+    init()  # initialize colorama
+    for control in controls_data:
+
+        status = control['overall_status']
+        control_id = control['id']
+        title = control['title']
+        results = control['results']
+
+        if status == "passed":
+            color = Fore.LIGHTGREEN_EX
+            symbol = "✔"
+        elif status == "failed":
+            color = Fore.LIGHTRED_EX
+            symbol = "×"
+        elif status == "skipped":
+            color = Fore.YELLOW
+            symbol = "-"
+        else:
+            color = Fore.MAGENTA
+            symbol = "?"
+
+        print(color + symbol + " " + status.upper(), control_id, title)
+
+        for result in results:
+            result_status = result['status']
+            description = result['code_desc']
+
+            if result_status == "passed":
+                color = Fore.LIGHTGREEN_EX
+                symbol = "✔"
+            elif result_status == "failed":
+                color = Fore.LIGHTRED_EX
+                symbol = "×"
+            elif result_status == "skipped":
+                color = Fore.YELLOW
+                symbol = "-"
+            else:
+                color = Fore.MAGENTA
+                symbol = "?"
+
+            print(color + "        " + symbol + " " + result_status + ": " + description)
+        print("\n")
 
