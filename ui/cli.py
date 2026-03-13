@@ -53,6 +53,7 @@ def run_scan():
 
         passed_tests = []
         failed_tests = []
+        skipped_tests = []
 
         for control in controls:
             control_id = control.get("id")
@@ -63,6 +64,8 @@ def run_scan():
                 passed_tests.append(control_title)
             elif status == "failed":
                 failed_tests.append(control_title)
+            elif status == "skipped":
+                skipped_tests.append(control_title)
             else:
                 print("Unknown status = ", status, file=sys.stderr)
 
