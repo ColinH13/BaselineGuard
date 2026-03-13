@@ -141,7 +141,7 @@ def run_scan():
                     symbol = "?"
 
                 print(color + "        " + result_status + ": " + description)
-        print("\n\n\n")
+            print("\n\n")
 
 
 
