@@ -159,7 +159,7 @@ def print_scan_results(controls_data):
                 symbol = "?"
 
             print(color + "     " + symbol + " " + description)
-            print(message)
+            print("     " + message, end="")
         print("\n")
 
     print(Fore.WHITE, "Controls: ", end="")
