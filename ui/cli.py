@@ -163,8 +163,8 @@ def print_scan_results(controls_data):
             expected, got = parse_expected_got(message)
 
             if expected and got:
-                print("     expected: ", expected)
-                print("     got: ", got)
+                print("        expected: ", expected)
+                print("        got: ", got)
 
         print("\n")
 
@@ -186,7 +186,15 @@ def parse_expected_got(message: str):
     expected_match = re.search(r'expected:\s*"?([^"\n]+)"?', message)
     got_match = re.search(r'got:\s*"?([^"\n]+)"?', message)
 
-    expected = expected_match.group(1) if expected_match else None
-    got = got_match.group(1) if got_match else None
+    if expected_match and got_match:
+        expected = expected_match.group(1) if expected_match else None
+        got = got_match.group(1) if got_match else None
+        return expected, got
 
-    return expected, got
+    alt_message = re.search(r'expected\s+"([^"]+)"\s+to.*?"([^"]+)"', message)
+    if alt_message:
+        return alt_message.group(2), alt_message.group(1)
+
+    return None, None
+
+
