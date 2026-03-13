@@ -121,7 +121,7 @@ def run_scan():
                 color = Fore.MAGENTA
                 symbol = "?"
 
-            print(symbol + color + status.upper(), control_id, title)
+            print(symbol + "  " + color + status.upper(), control_id, title)
 
             for result in results:
                 result_status = result['status']
@@ -140,7 +140,7 @@ def run_scan():
                     color = Fore.MAGENTA
                     symbol = "?"
 
-                print(color + "        " + symbol + result_status + ": " + description)
+                print(color + "        " + symbol + "  " + result_status + ": " + description)
             print("\n")
 
 
