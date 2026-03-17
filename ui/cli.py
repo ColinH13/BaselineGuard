@@ -100,6 +100,8 @@ def run_scan():
 
         for control in controls_data:
             print(f"title: {control['title']}, impact: {control['impact']}")
+            for result in control['results']:
+                print(f"result: {result['code_desc']}, status: {result['status']}")
 
 
 
