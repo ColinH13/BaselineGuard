@@ -9,10 +9,6 @@ from colorama import Fore, Style, init
 from utils import *
 import re
 
-from enum import Enum
-class SortOrder(Enum):
-    HIGH_IMPACT = 2
-    FAILED_FIRST = 3
 
 def run():
 
@@ -98,10 +94,9 @@ def run_scan():
 
         print_scan_results(controls_data) # In Natural/Standard order
 
-        for control in controls_data:
-            print(f"title: {control['title']}, impact: {control['impact']}")
-            for result in control['results']:
-                print(f"     result: {result['code_desc']}, status: {result['status']}")
+        ordered_controls = sort_controls_data(controls_data)
+        print_scan_results(ordered_controls) # Ordered by Failed > Passed > Skipped
+
 
 
 
@@ -112,9 +107,24 @@ def exit_from_prompt():
     print("Exiting...")
     sys.exit(1)
 
-def order_controls_data(controls_data, order=SortOrder.HIGH_IMPACT):
+def sort_controls_data(controls_data):
     print("Ordering controls data...")
-    print("TODO: Implement")
+    failed_controls = []
+    passed_controls = []
+    skipped_controls = []
+    for control in controls_data:
+        if control['overall_status'] == 'failed':
+            failed_controls.append(control)
+        elif control['overall_status'] == 'passed':
+            passed_controls.append(control)
+        else:
+            skipped_controls.append(control)
+    ordered_controls_data = failed_controls + passed_controls + skipped_controls
+    return ordered_controls_data
+
+
+
+
 
 def print_scan_results(controls_data):
     init()  # initialize colorama
