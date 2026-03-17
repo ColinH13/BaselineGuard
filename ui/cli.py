@@ -9,6 +9,11 @@ from colorama import Fore, Style, init
 from utils import *
 import re
 
+from enum import Enum
+class SortOrder(Enum):
+    HIGH_IMPACT = 2
+    FAILED_FIRST = 3
+
 def run():
 
     installed, version = check_inspec_installed()
@@ -91,13 +96,23 @@ def run_scan():
             }
             controls_data.append(control_entry)
 
-        print_scan_results(controls_data)
+        print_scan_results(controls_data) # In Natural/Standard order
+
+        for control in controls_data:
+            print(f"title: {control['title']}, impact: {control['impact']}")
+
+
+
 
 
 
 def exit_from_prompt():
     print("Exiting...")
     sys.exit(1)
+
+def order_controls_data(controls_data, order=SortOrder.HIGH_IMPACT):
+    print("Ordering controls data...")
+    print("TODO: Implement")
 
 def print_scan_results(controls_data):
     init()  # initialize colorama
