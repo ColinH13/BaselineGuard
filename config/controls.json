@@ -1,0 +1,30 @@
+{
+  "controls": [
+    {
+      "id": "test_id",
+      "title": "Test Title",
+      "description": "Test Description",
+      "os": ["linux"],
+      "enabled": true,
+
+
+      "remediation": {
+        "function": "test_function",
+        "description": "test_function description",
+        "requires_sudo": false,
+        "safe": true
+      }
+    },
+
+    {
+      "id": "test2"
+
+    }
+
+
+
+
+
+
+  ]
+}

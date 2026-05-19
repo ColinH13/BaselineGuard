@@ -24,8 +24,39 @@ def run():
         if choice == "1" or choice == "scan":
             run_scan()
 
+            while True:
+                print_prompt()
+                choice = input("> ")
+
+        if choice == "2" or choice in ["remediate", "fix", "resolve"]:
+            print("You must initiate a scan before attempting to remediate")
+
         if choice == "3" or choice == "exit":
             exit_from_prompt()
+
+
+
+
+def run_user_choice(choice):
+    if choice == "2" or choice in ["remediate", "fix", "resolve"]:
+        print() # Add prompt to show potential configs to remediate
+
+    if choice == "3" or choice == "exit":
+        exit_from_prompt()
+
+    else:
+        print("Invalid choice, please try again")
+
+
+
+def print_controls():
+    print("Only controls that failed can be remediated. There may be some controls for which a remediation hasn't yet been configured.")
+    print("If there is a failed control that doesn't appear in this list, you can request it to be added by creating an Issue on the GitHub repository.")
+
+    
+
+
+
 
 
 
@@ -37,6 +68,7 @@ def print_not_installed_message():
 def print_prompt():
     print(" What would you like to do?")
     print("     1. Scan your system")
+    print("     2. Remediate a configuration")
     print("     3. Exit")
 
 def run_scan():
