@@ -1,5 +1,6 @@
 {
   "controls": [
+
     {
       "id": "test_id",
       "title": "Test Title",
@@ -7,18 +8,27 @@
       "os": ["linux"],
       "enabled": true,
 
-
       "remediation": {
         "function": "test_function",
-        "description": "test_function description",
+        "description": "This remediation is only a test and does nothing",
         "requires_sudo": false,
         "safe": true
       }
     },
 
     {
-      "id": "test2"
+      "id": "test_2",
+      "title": "Test Title 2",
+      "description": "Test Description 2",
+      "os": ["linux"],
+      "enabled": true,
 
+      "remediation": {
+        "function": "test_function_2",
+        "description": "test_function description 2",
+        "requires_sudo": false,
+        "safe": true
+      }
     }
 
 
